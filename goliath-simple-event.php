@@ -23,7 +23,7 @@ function goliath_pre_get_post_for_event($query) {
         $today = date( 'Y-m-d' );
 
         $query->set('order', 'ASC' );
-        $query->set('orderby', 'meta_value_num' );
+        $query->set('orderby', 'meta_value' );
         $query->set('meta_key', 'goliath_event_start_date' );
         $query->set('meta_query', array(
             array(
