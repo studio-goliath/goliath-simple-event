@@ -14,7 +14,10 @@ require_once ('post-types/event.php');
 add_action('pre_get_posts', 'goliath_pre_get_post_for_event');
 
 /**
+ * La liste d'événements par defaut affiche les événements a venir et trier par date
+ *
  * @param $query
+ *
  */
 function goliath_pre_get_post_for_event($query) {
 
@@ -35,5 +38,33 @@ function goliath_pre_get_post_for_event($query) {
         ) );
 
     }
+}
 
+add_filter( 'rest_event_query', 'goliath_rest_event_query' );
+
+/**
+ *
+ * La liste d'événements par defaut affiche les événements a venir et trier par date
+ *
+ * @param $args
+ *
+ * @return mixed
+ */
+function goliath_rest_event_query( $args ){
+
+    $today = date( 'Y-m-d' );
+
+    $args['order'] = 'ASC';
+    $args['orderby'] = 'meta_value';
+    $args['meta_key'] = 'goliath_event_start_date';
+    $args['meta_query'] = array(
+        array(
+            'key'       => 'goliath_event_start_date',
+            'value'     => $today,
+            'type'      => 'DATE',
+            'compare'   => '>=',
+        )
+    );
+
+    return $args;
 }

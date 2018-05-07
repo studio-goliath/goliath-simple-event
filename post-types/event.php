@@ -24,17 +24,26 @@ function goliath_event_init() {
             'not_found_in_trash'  => __( 'No events in trash', 'goliath_simple_event' ),
             'menu_name'           => __( 'Event', 'goliath_simple_event' ),
         ),
-        'public'            => true,
-        'hierarchical'      => false,
-        'show_ui'           => true,
-        'show_in_nav_menus' => true,
-        'supports'          => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-        'has_archive'       => _x( 'event', 'slug', 'goliath_simple_event' ),
-        'rewrite'           => true,
-        'query_var'         => true,
-        'menu_icon'         => 'dashicons-calendar-alt',
-        'show_in_rest'      => true,
+        'public'                => true,
+        'hierarchical'          => false,
+        'show_ui'               => true,
+        'show_in_nav_menus'     => true,
+        'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt', 'custom-fields' ),
+        'has_archive'           => _x( 'event', 'slug', 'goliath_simple_event' ),
+        'rewrite'               => true,
+        'query_var'             => true,
+        'menu_icon'             => 'dashicons-calendar-alt',
+        'show_in_rest'          => true,
     ) );
+
+    register_meta( 'post', 'goliath_event_start_date', array(
+            'object_subtype' => 'event',
+            'type'          => 'string',
+            'description'   => 'The starting date of the event',
+            'sanitize_callback' => 'sanitize_text_field',
+            'single'            => true,
+            'show_in_rest'      => true
+    ));
 
 }
 
